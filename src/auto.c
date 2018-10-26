@@ -28,7 +28,7 @@
  */
 
 void autonomous() {
-	Launcher launcher(3,2,1,4);
+	//Launcher launcher(3,2,1,4);
 	//TracksMotion motion(5,6);
 	//TwoWheelMoton motion(5,7);
 	//FourWheelMoton motion(5,6,7,8);
@@ -38,13 +38,13 @@ void autonomous() {
 	//OperatorController controller(launcher, motion, lift, sensors); 
  	//AutonomousContoller controller(launcher, motion, lift, sensors);
 
-	launcher.setAngle(50);
-	launcher.rampSpeed(0, 100, 1000);
-	launcher.launch();
-	launcher.rampSpeed(100, 0, 1000);
+	//launcher.setAngle(50);
+	//launcher.rampSpeed(0, 100, 1000);
+	//launcher.launch();
+	//launcher.rampSpeed(100, 0, 1000);
 
-	int sonarDist = 5.2;
-	launcher.setUsingFormula(sonarDist, FIELD_FLAGS[0].z - LAUNCHER_Z);
-	launcher.launch();
-	launcher.rampSpeed(100, 0, 1000);
+	//int sonarDist = 5.2;
+	//launcher.setUsingFormula(sonarDist, FIELD_FLAGS[0].z - LAUNCHER_Z);
+	//launcher.launch();
+	//launcher.rampSpeed(100, 0, 1000);
 }

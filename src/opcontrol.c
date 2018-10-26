@@ -8,6 +8,7 @@
  */
 
 #include "main.h"
+#include "launcher.h"
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the
@@ -26,9 +27,22 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
+#define clamp(x, a, b) (x < a) ? a : ((x > b) ? b : x)
+
+
 void operatorControl() {
+	delay(1000);
+	printf("Starting\n");
+
+	Launcher launcher(3,2,1,4);
+	launcher.rampSpeed(0, 50, 10000);
+	delay(100);
+	launcher.rampSpeed(50, 0, 10000);
+
 	while (1) {
-		printf("Hello PROS User!\n");
+		//motorSet(2, 10);
+
+		//printf("Hello PROS User!\n");	
 		delay(20);
 	}
 }

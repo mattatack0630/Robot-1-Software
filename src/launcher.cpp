@@ -2,6 +2,7 @@
 #include "main.h"
 #include <math.h>
 
+#define clamp(x, a, b) (x < a) ? a : ((x > b) ? b : x)
 #define PWM_TO_MPS 0.5
 
 Launcher::Launcher(int pinLeft, int pinRight, int pinAngler, int pinDropper){
@@ -20,8 +21,8 @@ void Launcher::setAngle(int angleDeg){
 }
 
 void Launcher::setSpeed(int speed){
-	motorSet(pinRWheel, speed);
-	motorSet(pinLWheel, -speed);
+	motorSet(pinRWheel, clamp(speed, -127, 127));
+	motorSet(pinLWheel, clamp(-speed, -127, 127));
 }
 
 void Launcher::rampSpeed(int begin, int end, int timeMs){
@@ -31,8 +32,8 @@ void Launcher::rampSpeed(int begin, int end, int timeMs){
 	long then = millis();
 	
 	while(millis() - then < timeMs){
-		double elapsed = (millis() - then) / (double)timeMs;
-		double interpSpeed = ((begin * (1.0 * elapsed)) + (end * elapsed));
+		double elapsed = (double)(millis() - then) / (double)timeMs;
+		double interpSpeed = (begin+elapsed*(end-begin));
 
 		setSpeed((int)interpSpeed);
 		
