@@ -3,14 +3,8 @@
  *
  * This file should contain the user operatorControl() function and any functions related to it.
  *
- * ` contains FreeRTOS (http://www.freertos.org) whose source code may be
+ * contains FreeRTOS (http://www.freertos.org) whose source code may be
  * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
- */
-
-#include "main.h"
-#include "launcher.h"
-
-/*
  * Runs the user operator control code. This function will be started in its own task with the
  * default priority and stack size whenever the robot is enabled via the Field Management System
  * or the VEX Competition Switch in the operator control mode. If the robot is disabled or
@@ -27,22 +21,30 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
+
+#include "main.h"
+#include "launcher.h"
+#include "drives.h"
+
 #define clamp(x, a, b) (x < a) ? a : ((x > b) ? b : x)
 
+double map(double x, double in_a, double in_b, double out_a, double out_b){
+	return (x - in_a) * (out_b - out_a) / (in_b - in_a) + out_b;
+}
 
-void operatorControl() {
-	delay(1000);
-	printf("Starting\n");
+void operatorControl() 
+{
+	delay(10);
 
-	Launcher launcher(3,2,1,4);
-	launcher.rampSpeed(0, 50, 10000);
-	delay(100);
-	launcher.rampSpeed(50, 0, 10000);
+	TreadDrive drive(4,5);
 
-	while (1) {
-		//motorSet(2, 10);
+	while (1) 
+	{
+		double yin = (double) -joystickGetAnalog(3, 2) / 127.0;
+		double xin = (double) -joystickGetAnalog(3, 1) / 127.0;
 
-		//printf("Hello PROS User!\n");	
+		drive.easy_drive(xin, yin);
+
 		delay(20);
 	}
 }
