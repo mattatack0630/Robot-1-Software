@@ -43,9 +43,8 @@ void autonomous() {
 	//launcher.launch();
 	//launcher.rampSpeed(100, 0, 1000);
 
-	int sonarDist = 5.2;
+	//int sonarDist = 5.2;
 	//launcher.setUsingFormula(sonarDist, FIELD_FLAGS[0].z - LAUNCHER_Z);
 	//launcher.launch();
 	//launcher.rampSpeed(100, 0, 1000);
-
 }
