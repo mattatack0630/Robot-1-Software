@@ -30,19 +30,34 @@
 #define clamp(x, a, b) (x < a) ? a : ((x > b) ? b : x)
 
 
+double map(double x, double in_a, double in_b, double out_a, double out_b){
+	return (x - in_a) * (out_b - out_a) / (in_b - in_a) + out_b;
+}
+
 void operatorControl() {
 	delay(1000);
 	printf("Starting\n");
 
-	Launcher launcher(3,2,1,4);
-	launcher.rampSpeed(0, 50, 10000);
-	delay(100);
-	launcher.rampSpeed(50, 0, 10000);
-
 	while (1) {
-		//motorSet(2, 10);
 
-		//printf("Hello PROS User!\n");	
+		double yin = (double) -joystickGetAnalog(3, 2) / 127.0;
+		double xin = (double) -joystickGetAnalog(3, 1) / 127.0;
+		double right_out = clamp((xin*2+1), -1, 1);
+		double left_out = clamp((-xin*2+1), -1, 1);
+
+		left_out = map(left_out, -1, 1, 0, 1);
+		right_out = map(right_out, -1, 1, 0, 1);
+
+		motorSet(4, (int)(-left_out * (yin*127)));
+		motorSet(5, (int)(right_out * (yin*127)));
+
+		/*double j1 = (double) joystickGetAnalog(3, 2);
+		double j2 = (double) joystickGetAnalog(3, 3);
+		
+		motorSet(4, j1);
+		motorSet(5, -j2);
+		*/
+		printf("Analog 1 - %d\n", 100);	
 		delay(20);
 	}
 }
