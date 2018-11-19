@@ -40,7 +40,18 @@ void operatorControl()
 		double yin2 = (double) joystickGetAnalog(1, 3) / 127.0;
 		double xin2 = (double) joystickGetAnalog(1, 4) / 127.0;
 
-		drive.manual_drive(yin1, yin2);
+		bool LB = joystickGetDigital(1, 5, JOY_UP);
+		bool RB = joystickGetDigital(1, 6, JOY_UP);
+		
+		int s = 0;
+		if(LB)
+			s+=127;
+		if(RB)
+			s-=127;
+
+		motorSet(9, s);
+
+		drive.manual_drive(yin2, yin1);
 
 		delay(20);
 	}
