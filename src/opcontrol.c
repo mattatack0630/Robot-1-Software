@@ -26,12 +26,6 @@
 #include "launcher.h"
 #include "drives.h"
 
-#define clamp(x, a, b) (x < a) ? a : ((x > b) ? b : x)
-
-double map(double x, double in_a, double in_b, double out_a, double out_b){
-	return (x - in_a) * (out_b - out_a) / (in_b - in_a) + out_b;
-}
-
 void operatorControl() 
 {
 	delay(10);
@@ -40,10 +34,24 @@ void operatorControl()
 
 	while (1) 
 	{
-		double yin = (double) -joystickGetAnalog(3, 2) / 127.0;
-		double xin = (double) -joystickGetAnalog(3, 1) / 127.0;
+		double yin1 = (double) joystickGetAnalog(1, 2) / 127.0;
+		double xin1 = (double) joystickGetAnalog(1, 1) / 127.0;
 
-		drive.easy_drive(xin, yin);
+		double yin2 = (double) joystickGetAnalog(1, 3) / 127.0;
+		double xin2 = (double) joystickGetAnalog(1, 4) / 127.0;
+
+		bool LB = joystickGetDigital(1, 5, JOY_UP);
+		bool RB = joystickGetDigital(1, 6, JOY_UP);
+		
+		int s = 0;
+		if(LB)
+			s+=127;
+		if(RB)
+			s-=127;
+
+		motorSet(9, s);
+
+		drive.manual_drive(yin2, yin1);
 
 		delay(20);
 	}
