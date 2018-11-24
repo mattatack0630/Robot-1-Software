@@ -1,9 +1,6 @@
 #include "drives.h"
 #include "main.h"
-
-#define clamp(x, a, b) (x < a) ? a : ((x > b) ? b : x)
-#define min(a, b) (a<b) ? a : b
-#define max(a, b) (a>b) ? a : b
+#include "mathfuncs.h"
 
 TreadDrive::TreadDrive(double l_motor, double r_motor)
 	: l_motor_pin(l_motor), r_motor_pin(r_motor)
